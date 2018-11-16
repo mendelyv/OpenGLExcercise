@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+//顶点
 float vertices[] = {
 	-0.5f,-0.5f,0.0f,
 	0.5f,-0.5f,0.0f,
@@ -13,14 +14,20 @@ float vertices[] = {
 const char* vertexShaderSource =
 "#version 330 core\n"
 "layout(location = 0) in vec3 aPos;\n"
+"out vec4 vertexColor;\n"
 "void main(){\n"
-"     gl_Position = vec4(aPos.x,aPos.y,aPos.z,1.0);}\n";
+"     gl_Position = vec4(aPos.x,aPos.y,aPos.z,1.0);\n"
+"	  vertexColor = vec4(1.0, 0, 0, 1.0); \n"
+"}\n";
 
 const char* fragmentShaderSource =
 "#version 330 core\n"
-"out vec4 FragColor;"
-"void main(){"
-"   FragColor = vec4(1.0f,0.5f,0.2f,1.0f);}";
+"out vec4 FragColor;\n"
+"in vec4 vertexColor;\n"
+"uniform vec4 ourColor;\n"
+"void main(){\n"
+"   FragColor = ourColor;\n"
+"}";
 
 void processInput(GLFWwindow* window)
 {
@@ -63,10 +70,12 @@ int main()
 
 	glViewport(0, 0, 800, 600);
 
+	//顶点数组对象：Vertex Array Object
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
+	//顶点缓冲对象：Vertex Buffer Object
 	unsigned int VBO;
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -102,7 +111,11 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glBindVertexArray(VAO);
+		float timeValue = glfwGetTime();
+		float greenValue = sin(timeValue) / 2 + 0.5;
+		int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
 		glUseProgram(shaderProgram);
+		glUniform4f(vertexColorLocation, 0, greenValue, 0, 1.0f);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(window);
