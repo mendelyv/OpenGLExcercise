@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-//¶¥µã
+//é¡¶ç‚¹
 float vertices[] = {
 	-0.5f,-0.5f,0.0f,
 	0.5f,-0.5f,0.0f,
@@ -44,9 +44,9 @@ int main()
 	//system("pause");
 
 	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);//¸æËßGLFWÒªÓÃµÄÖ÷°æ±¾ºÅ
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);//×Ó°æ°æ±¾ºÅ
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);//äÖÈ¾¹ÜÏßµÄÁ÷³Ì
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);//å‘Šè¯‰GLFWè¦ç”¨çš„ä¸»ç‰ˆæœ¬å·
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);//å­ç‰ˆç‰ˆæœ¬å·
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);//æ¸²æŸ“ç®¡çº¿çš„æµç¨‹
 
 	GLFWwindow* window = glfwCreateWindow(800, 600, "My OpenGL Game", NULL, NULL);
 	if (window == NULL)
@@ -60,7 +60,7 @@ int main()
 
 	//Init GLEW
 	glewExperimental = true;
-	
+
 	if (glewInit() != GLEW_OK)
 	{
 		printf("Init GLEW Failed");
@@ -70,12 +70,12 @@ int main()
 
 	glViewport(0, 0, 800, 600);
 
-	//¶¥µãÊı×é¶ÔÏó£ºVertex Array Object
+	//é¡¶ç‚¹æ•°ç»„å¯¹è±¡ï¼šVertex Array Object
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
-	//¶¥µã»º³å¶ÔÏó£ºVertex Buffer Object
+	//é¡¶ç‚¹ç¼“å†²å¯¹è±¡ï¼šVertex Buffer Object
 	unsigned int VBO;
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -100,7 +100,7 @@ int main()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	//Èç¹û²»¹Ø±Õ´°¿Ú¾ÍÒ»Ö±½»»»»º³åÇø
+	//å¦‚æœä¸å…³é—­çª—å£å°±ä¸€ç›´äº¤æ¢ç¼“å†²åŒº
 	while (!glfwWindowShouldClose(window))
 	{
 		//input commands
