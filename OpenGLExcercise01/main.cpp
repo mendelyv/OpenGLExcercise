@@ -4,6 +4,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "Shader.h"
+
 //顶点
 float vertices[] = {
 	-0.5f,-0.5f,0.0f, 1.0f,0.0f,0.0f,
@@ -40,6 +42,7 @@ void processInput(GLFWwindow* window)
 
 int main()
 {
+	Shader* shader = new Shader("vertexSource.txt", "fragmentSource.txt");
 
 	//printf("hihihi\n");
 	//system("pause");

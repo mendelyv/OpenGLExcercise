@@ -4,8 +4,7 @@
 class Shader
 {
 public:
-	Shader();
-private:
+	Shader(const char* vertexPath, const char* fragmentPath);
 	
 };
 

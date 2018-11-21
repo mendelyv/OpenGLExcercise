@@ -30,4 +30,10 @@
       <Filter>源文件\Shader</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="vertexSource.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fragmentSource.txt" />
+  </ItemGroup>
 </Project>
