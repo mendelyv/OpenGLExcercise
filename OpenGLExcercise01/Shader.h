@@ -13,7 +13,11 @@ public:
 	unsigned int ID; //Shader Program ID;
 
 public:
-	void use();
+	void Use();
+
+
+private:
+	void CheckCompileErrors(unsigned int ID, std::string type);
 };
 
 #endif
