@@ -29,11 +29,19 @@
     <ClInclude Include="Shader.h">
       <Filter>源文件\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="vertexSource.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragmentSource.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="container.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
 </Project>
