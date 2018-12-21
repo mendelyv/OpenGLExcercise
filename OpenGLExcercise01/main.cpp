@@ -9,6 +9,10 @@
 
 #include "Shader.h"
 
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
+
 //顶点
 float vertices[] = {
 	//     ---- 位置 ----       ---- 颜色 ----     - 纹理坐标 -
@@ -148,9 +152,19 @@ int main()
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_2D, texBufferB);
 
+	//计算位移坐标矩阵
+	//tip : 当要混合操作时，先进行缩放操作，然后是旋转，最后是位移，否则它们会（消极的）相互影响
+	//tip : 列主序需要从右往左阅读，但是计算时要从左往右
+	//glm::mat4 trans;
+	//trans = glm::translate(trans, glm::vec3(-1.0f, 0, 0));//位移
+	//trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0, 0, 1.0f));//旋转
+	//trans = glm::scale(trans, glm::vec3(0.5f, 0.5f, 0.5f));//缩放
+	
+
 	shader->Use();
 	glUniform1i(glGetUniformLocation(shader->ID, "tex"), 0);
 	glUniform1i(glGetUniformLocation(shader->ID, "tex2"), 3);
+	//glUniformMatrix4fv(glGetUniformLocation(shader->ID, "transform"), 1, GL_FALSE, glm::value_ptr(trans));
 
 	//如果不关闭窗口就一直交换缓冲区
 	while (!glfwWindowShouldClose(window))
@@ -161,7 +175,12 @@ int main()
 		// rendering commands here
 		glClearColor(0, 0.5f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		
+
+		glm::mat4 trans;
+		trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+		trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(glGetUniformLocation(shader->ID, "transform"), 1, GL_FALSE, glm::value_ptr(trans));
+
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);

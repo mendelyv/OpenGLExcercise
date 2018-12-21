@@ -3,11 +3,13 @@ layout(location = 4) in vec3 aPos;//这里的管线要跟下方使用的管线�
 layout(location = 5) in vec3 aColor;
 layout(location = 6) in vec2 aTexCoord;//uv值
 
+uniform mat4 transform;
+
 out vec4 vertexColor;//向片段着色器输出一个颜色
 out vec2 texCoord;
 void main()
 {
-	gl_Position = vec4(aPos.x,aPos.y,aPos.z,1.0);
-	vertexColor = vec4(aColor.x,aColor.y,aColor.z,1.0);
+	gl_Position = transform * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
+	vertexColor = vec4(aColor.x, aColor.y, aColor.z, 1.0);
 	texCoord = aTexCoord;
 }
