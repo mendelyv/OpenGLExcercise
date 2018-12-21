@@ -30,6 +30,7 @@ unsigned int indices[] = {
 	2, 3, 0
 };
 
+//检测输入信号
 void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -75,9 +76,9 @@ int main()
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//开启线框模式
 
 	Shader* shader = new Shader("vertexSource.txt", "fragmentSource.txt");
-	printf(shader->vertexSource);
-	printf("\n");
-	printf(shader->fragmentSource);
+	//printf(shader->vertexSource);
+	//printf("\n");
+	//printf(shader->fragmentSource);
 
 	//顶点数组对象：Vertex Array Object
 	unsigned int VAO;
@@ -90,6 +91,7 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+	//索引缓冲对象：Element Buffer Object
 	unsigned int EBO;
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -107,11 +109,12 @@ int main()
 	glVertexAttribPointer(6, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(6);
 
-	//纹理缓存
-	unsigned int texBuffer;
-	glGenTextures(1, &texBuffer);
-	glBindTexture(GL_TEXTURE_2D, texBuffer);
+	stbi_set_flip_vertically_on_load(true);//反转y轴
 
+	//纹理缓存
+	unsigned int texBufferA;
+	glGenTextures(1, &texBufferA);
+	glBindTexture(GL_TEXTURE_2D, texBufferA);
 	int width, height, numChannel;
 	unsigned char* data = stbi_load("container.jpg", &width, &height, &numChannel, 0);
 	if (data)
@@ -123,6 +126,31 @@ int main()
 	{
 		printf("load image failed \n");
 	}
+	stbi_image_free(data);
+
+	unsigned int texBufferB;
+	glGenTextures(1, &texBufferB);
+	glBindTexture(GL_TEXTURE_2D, texBufferB);
+	unsigned char* data2 = stbi_load("awesomeface.png", &width, &height, &numChannel, 0);
+	if (data2)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data2);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		printf("load image failed \n");
+	}
+	stbi_image_free(data2);
+
+	glActiveTexture(GL_TEXTURE0);// 在绑定纹理之前先激活纹理单元
+	glBindTexture(GL_TEXTURE_2D, texBufferA);
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, texBufferB);
+
+	shader->Use();
+	glUniform1i(glGetUniformLocation(shader->ID, "tex"), 0);
+	glUniform1i(glGetUniformLocation(shader->ID, "tex2"), 3);
 
 	//如果不关闭窗口就一直交换缓冲区
 	while (!glfwWindowShouldClose(window))
@@ -133,17 +161,7 @@ int main()
 		// rendering commands here
 		glClearColor(0, 0.5f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		glBindTexture(GL_TEXTURE_2D, texBuffer);
-		glBindVertexArray(VAO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		//float timeValue = glfwGetTime();
-		//float greenValue = sin(timeValue) / 2 + 0.5;
-		//int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
-		//glUseProgram(shaderProgram);
-		//glUniform4f(vertexColorLocation, 0, greenValue, 0, 1.0f);
-		shader->Use();
 		
-		//glDrawArrays(GL_TRIANGLES, 0, 4);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
