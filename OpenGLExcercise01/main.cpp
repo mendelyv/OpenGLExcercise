@@ -159,7 +159,15 @@ int main()
 	//trans = glm::translate(trans, glm::vec3(-1.0f, 0, 0));//位移
 	//trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0, 0, 1.0f));//旋转
 	//trans = glm::scale(trans, glm::vec3(0.5f, 0.5f, 0.5f));//缩放
-	
+
+	//计算坐标转换所需要的矩阵
+	glm::mat4 modelMat;//LOCATION MATRIX
+	modelMat = glm::rotate(modelMat, glm::radians(-55.0f), glm::vec3(1.0f, 0, 0));
+	glm::mat4 viewMat;//VIEW MATRIX
+	viewMat = glm::translate(viewMat, glm::vec3(0, 0, -3.0f));
+	glm::mat4 projMat;
+	//PROJECTION MATRIX转换，视椎体夹角，屏幕宽高比，最近，最远
+	projMat = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
 	shader->Use();
 	glUniform1i(glGetUniformLocation(shader->ID, "tex"), 0);
@@ -176,10 +184,12 @@ int main()
 		glClearColor(0, 0.5f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glm::mat4 trans;
-		trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-		trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-		glUniformMatrix4fv(glGetUniformLocation(shader->ID, "transform"), 1, GL_FALSE, glm::value_ptr(trans));
+		//glm::mat4 trans;
+		//trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+		//trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(glGetUniformLocation(shader->ID, "modelMat"), 1, GL_FALSE, glm::value_ptr(modelMat));
+		glUniformMatrix4fv(glGetUniformLocation(shader->ID, "viewMat"), 1, GL_FALSE, glm::value_ptr(viewMat));
+		glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projMat"), 1, GL_FALSE, glm::value_ptr(projMat));
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
