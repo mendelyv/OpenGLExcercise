@@ -141,10 +141,10 @@
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="vertexSource.txt" />
+    <Text Include="vertexSource.vert" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragmentSource.txt" />
+    <None Include="fragmentSource.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="awesomeface.png" />

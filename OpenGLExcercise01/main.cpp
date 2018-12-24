@@ -14,15 +14,8 @@
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
 
+#pragma region Model Data
 //顶点
-//float vertices[] = {
-//	//     ---- 位置 ----       ---- 颜色 ----     - 纹理坐标 -
-//		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 右上
-//		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 右下
-//		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 左下
-//		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // 左上
-//};
-
 float vertices[] = {
 	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -67,20 +60,6 @@ float vertices[] = {
 	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
 
-
-//float vertices[] = {
-//	-0.5f,-0.5f,0.0f, 1.0f,0.0f,0.0f,
-//	0.5f,-0.5f,0.0f, 0.0f,1.0f,0.0f,
-//	0.0f,0.5f,0.0f, 0.0f,0.0f,1.0f
-//};
-
-//索引数组，给EBO服务
-unsigned int indices[] = {
-	0, 1, 2,
-	2, 3, 0
-};
-
-
 glm::vec3 cubePositions[] = {
   glm::vec3(0.0f,  0.0f,  0.0f),
   glm::vec3(2.0f,  5.0f, -15.0f),
@@ -93,11 +72,12 @@ glm::vec3 cubePositions[] = {
   glm::vec3(1.5f,  0.2f, -1.5f),
   glm::vec3(-1.3f,  1.0f, -1.5f)
 };
+#pragma endregion
 
 //Instantiate Camera Object
-//Camera* camera = new Camera(glm::vec3(0, 0, 3.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1.0f, 0));
 Camera* camera = new Camera(glm::vec3(0, 0, 3.0f), glm::radians(15.0f), glm::radians(180.0f), glm::vec3(0, 1.0f, 0));
 
+#pragma region Input Declare
 //检测输入信号
 void processInput(GLFWwindow* window)
 {
@@ -141,13 +121,36 @@ void mouseEventCallBack(GLFWwindow* window, double x, double y)
 	lastX = x;
 	lastY = y;
 }
+#pragma endregion
+
+//加载纹理给GPU
+unsigned int LoadImageToGPU(const char* imageName, int textureSlot, bool hasAlpha = false)
+{
+	unsigned int ret;
+	int width, height, numChannel;
+	glGenTextures(1, &ret);
+	glActiveTexture(GL_TEXTURE0 + textureSlot);
+	glBindTexture(GL_TEXTURE_2D, ret);
+	unsigned char* data = stbi_load(imageName, &width, &height, &numChannel, 0);
+	if (data)
+	{
+		if(!hasAlpha)
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		else
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		printf("load image failed \n");
+	}
+	stbi_image_free(data);
+	return ret;
+}
 
 int main()
 {
-
-	//printf("hihihi\n");
-	//system("pause");
-
+	#pragma region Open a Window
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);//告诉GLFW要用的主版本号
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);//子版版本号
@@ -180,13 +183,11 @@ int main()
 	//glCullFace(GL_BACK);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//开启线框模式
 	glEnable(GL_DEPTH_TEST);//开启深度测试
+	#pragma endregion
 
-	Shader* shader = new Shader("vertexSource.txt", "fragmentSource.txt");
-	//printf(shader->vertexSource);
-	//printf("\n");
-	//printf(shader->fragmentSource);
+	Shader* shader = new Shader("vertexSource.vert", "fragmentSource.frag");
 
-
+	#pragma region Init VAO,VBO
 	//顶点数组对象：Vertex Array Object
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
@@ -215,45 +216,15 @@ int main()
 	//文理uv属性
 	glVertexAttribPointer(6, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(6);
+	#pragma endregion
 
 	stbi_set_flip_vertically_on_load(true);//反转y轴
 
 	//纹理缓存
 	unsigned int texBufferA;
-	glGenTextures(1, &texBufferA);
-	glBindTexture(GL_TEXTURE_2D, texBufferA);
-	int width, height, numChannel;
-	unsigned char* data = stbi_load("container.jpg", &width, &height, &numChannel, 0);
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		printf("load image failed \n");
-	}
-	stbi_image_free(data);
-
+	texBufferA = LoadImageToGPU("container.jpg", 0);
 	unsigned int texBufferB;
-	glGenTextures(1, &texBufferB);
-	glBindTexture(GL_TEXTURE_2D, texBufferB);
-	unsigned char* data2 = stbi_load("awesomeface.png", &width, &height, &numChannel, 0);
-	if (data2)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data2);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		printf("load image failed \n");
-	}
-	stbi_image_free(data2);
-
-	glActiveTexture(GL_TEXTURE0);// 在绑定纹理之前先激活纹理单元
-	glBindTexture(GL_TEXTURE_2D, texBufferA);
-	glActiveTexture(GL_TEXTURE3);
-	glBindTexture(GL_TEXTURE_2D, texBufferB);
+	texBufferB = LoadImageToGPU("awesomeface.png", 3, true);
 
 	//计算位移坐标矩阵
 	//tip : 当要混合操作时，先进行缩放操作，然后是旋转，最后是位移，否则它们会（消极的）相互影响
@@ -263,12 +234,11 @@ int main()
 	//trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0, 0, 1.0f));//旋转
 	//trans = glm::scale(trans, glm::vec3(0.5f, 0.5f, 0.5f));//缩放
 
-	//计算坐标转换所需要的矩阵
+	//计算坐标转换所需要的矩阵，MVP矩阵
 	glm::mat4 modelMat;//LOCATION MATRIX
-	modelMat = glm::rotate(modelMat, glm::radians(-45.0f), glm::vec3(1.0f, 1.0f, 0));
+	//modelMat = glm::rotate(modelMat, glm::radians(-45.0f), glm::vec3(1.0f, 1.0f, 0));
 	glm::mat4 viewMat;//VIEW MATRIX
 	viewMat = camera->GetViewMatrix();
-	//viewMat = glm::translate(viewMat, glm::vec3(0, 0, -3.0f));
 	glm::mat4 projMat;
 	//PROJECTION MATRIX转换，视椎体夹角，屏幕宽高比，最近，最远
 	projMat = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
@@ -279,7 +249,7 @@ int main()
 	//glUniformMatrix4fv(glGetUniformLocation(shader->ID, "transform"), 1, GL_FALSE, glm::value_ptr(trans));
 
 	//如果不关闭窗口就一直交换缓冲区
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(window))//render loop
 	{
 		//input commands
 		processInput(window);
@@ -292,20 +262,22 @@ int main()
 		viewMat = camera->GetViewMatrix();
 		for (int i = 0; i < 10; i++)
 		{
-			glm::mat4 modelMatTmp;
-			modelMatTmp = glm::translate(modelMatTmp, cubePositions[i]);
-
-			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "modelMat"), 1, GL_FALSE, glm::value_ptr(modelMatTmp));
+			modelMat = glm::translate(glm::mat4(1.0f), cubePositions[i]);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, texBufferA);
+			glActiveTexture(GL_TEXTURE3);
+			glBindTexture(GL_TEXTURE_2D, texBufferB);
+			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "modelMat"), 1, GL_FALSE, glm::value_ptr(modelMat));
 			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "viewMat"), 1, GL_FALSE, glm::value_ptr(viewMat));
 			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projMat"), 1, GL_FALSE, glm::value_ptr(projMat));
-
+			glBindVertexArray(VAO);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-		camera->UpdateCameraPosition();
+		glfwSwapBuffers(window);//交换双缓冲
+		glfwPollEvents();//获取输入
+		camera->UpdateCameraPosition();//更新摄像机位置
 	}
 
 	glfwTerminate();
