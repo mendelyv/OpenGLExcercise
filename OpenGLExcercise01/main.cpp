@@ -8,6 +8,7 @@
 #include "stb_image.h"
 
 #include "Shader.h"
+#include "Camera.h"
 
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
@@ -79,6 +80,20 @@ unsigned int indices[] = {
 	2, 3, 0
 };
 
+
+glm::vec3 cubePositions[] = {
+  glm::vec3(0.0f,  0.0f,  0.0f),
+  glm::vec3(2.0f,  5.0f, -15.0f),
+  glm::vec3(-1.5f, -2.2f, -2.5f),
+  glm::vec3(-3.8f, -2.0f, -12.3f),
+  glm::vec3(2.4f, -0.4f, -3.5f),
+  glm::vec3(-1.7f,  3.0f, -7.5f),
+  glm::vec3(1.3f, -2.0f, -2.5f),
+  glm::vec3(1.5f,  2.0f, -2.5f),
+  glm::vec3(1.5f,  0.2f, -1.5f),
+  glm::vec3(-1.3f,  1.0f, -1.5f)
+};
+
 //检测输入信号
 void processInput(GLFWwindow* window)
 {
@@ -130,6 +145,9 @@ int main()
 	//printf("\n");
 	//printf(shader->fragmentSource);
 
+	//Instantiate Camera Object
+	Camera* camera = new Camera(glm::vec3(0, 0, 3.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1.0f, 0));
+
 	//顶点数组对象：Vertex Array Object
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
@@ -142,10 +160,10 @@ int main()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	//索引缓冲对象：Element Buffer Object
-	unsigned int EBO;
-	glGenBuffers(1, &EBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_READ);
+	//unsigned int EBO;
+	//glGenBuffers(1, &EBO);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_READ);
 
 	//位置属性
 	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
@@ -210,7 +228,8 @@ int main()
 	glm::mat4 modelMat;//LOCATION MATRIX
 	modelMat = glm::rotate(modelMat, glm::radians(-45.0f), glm::vec3(1.0f, 1.0f, 0));
 	glm::mat4 viewMat;//VIEW MATRIX
-	viewMat = glm::translate(viewMat, glm::vec3(0, 0, -3.0f));
+	viewMat = camera->GetViewMatrix();
+	//viewMat = glm::translate(viewMat, glm::vec3(0, 0, -3.0f));
 	glm::mat4 projMat;
 	//PROJECTION MATRIX转换，视椎体夹角，屏幕宽高比，最近，最远
 	projMat = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
@@ -231,14 +250,17 @@ int main()
 		//清除颜色buffer和深度buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//glm::mat4 trans;
-		//trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-		//trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-		glUniformMatrix4fv(glGetUniformLocation(shader->ID, "modelMat"), 1, GL_FALSE, glm::value_ptr(modelMat));
-		glUniformMatrix4fv(glGetUniformLocation(shader->ID, "viewMat"), 1, GL_FALSE, glm::value_ptr(viewMat));
-		glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projMat"), 1, GL_FALSE, glm::value_ptr(projMat));
+		for (int i = 0; i < 10; i++)
+		{
+			glm::mat4 modelMatTmp;
+			modelMatTmp = glm::translate(modelMatTmp, cubePositions[i]);
 
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "modelMat"), 1, GL_FALSE, glm::value_ptr(modelMatTmp));
+			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "viewMat"), 1, GL_FALSE, glm::value_ptr(viewMat));
+			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projMat"), 1, GL_FALSE, glm::value_ptr(projMat));
+
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
@@ -249,4 +271,3 @@ int main()
 	return 0;
 
 }
-
