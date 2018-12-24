@@ -146,7 +146,8 @@ int main()
 	//printf(shader->fragmentSource);
 
 	//Instantiate Camera Object
-	Camera* camera = new Camera(glm::vec3(0, 0, 3.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1.0f, 0));
+	//Camera* camera = new Camera(glm::vec3(0, 0, 3.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1.0f, 0));
+	Camera* camera = new Camera(glm::vec3(0, 0, 3.0f), glm::radians(15.0f), glm::radians(180.0f), glm::vec3(0, 1.0f, 0));
 
 	//顶点数组对象：Vertex Array Object
 	unsigned int VAO;
