@@ -94,6 +94,10 @@ glm::vec3 cubePositions[] = {
   glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
+//Instantiate Camera Object
+//Camera* camera = new Camera(glm::vec3(0, 0, 3.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1.0f, 0));
+Camera* camera = new Camera(glm::vec3(0, 0, 3.0f), glm::radians(15.0f), glm::radians(180.0f), glm::vec3(0, 1.0f, 0));
+
 //检测输入信号
 void processInput(GLFWwindow* window)
 {
@@ -101,6 +105,41 @@ void processInput(GLFWwindow* window)
 	{
 		glfwSetWindowShouldClose(window, true);
 	}
+
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		camera->forwardSpeed = 1.0f;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		camera->forwardSpeed = -1.0f;
+	}
+	else
+	{
+		camera->forwardSpeed = 0.0f;
+	}
+}
+
+double lastX;
+double lastY;
+bool firstMouse = true;//避免首次进入时鼠标的数字过大
+
+//鼠标事件回调
+void mouseEventCallBack(GLFWwindow* window, double x, double y)
+{
+	if (firstMouse)
+	{
+		lastX = x;
+		lastY = y;
+		firstMouse = false;
+	}
+	double deltaX, deltaY;
+	deltaX = lastX - x;
+	deltaY = lastY - y;
+
+	camera->ProcessMouseMovement(deltaX, deltaY);
+	lastX = x;
+	lastY = y;
 }
 
 int main()
@@ -122,7 +161,9 @@ int main()
 		return -1;
 	}
 	glfwMakeContextCurrent(window);
-
+	//隐藏鼠标
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(window, mouseEventCallBack);
 
 	//Init GLEW
 	glewExperimental = true;
@@ -145,9 +186,6 @@ int main()
 	//printf("\n");
 	//printf(shader->fragmentSource);
 
-	//Instantiate Camera Object
-	//Camera* camera = new Camera(glm::vec3(0, 0, 3.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1.0f, 0));
-	Camera* camera = new Camera(glm::vec3(0, 0, 3.0f), glm::radians(15.0f), glm::radians(180.0f), glm::vec3(0, 1.0f, 0));
 
 	//顶点数组对象：Vertex Array Object
 	unsigned int VAO;
@@ -251,6 +289,7 @@ int main()
 		//清除颜色buffer和深度buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		viewMat = camera->GetViewMatrix();
 		for (int i = 0; i < 10; i++)
 		{
 			glm::mat4 modelMatTmp;
@@ -266,6 +305,7 @@ int main()
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		camera->UpdateCameraPosition();
 	}
 
 	glfwTerminate();

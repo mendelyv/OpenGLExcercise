@@ -16,5 +16,15 @@ public:
 	glm::vec3 up;
 	glm::vec3 worldUp;
 
+	float pitch;
+	float yaw;
+
+	float forwardSpeed = 0.0f;
+
 	glm::mat4 GetViewMatrix();
+	void ProcessMouseMovement(float deltaX, float deltaY);
+	void UpdateCameraPosition();
+
+private:
+	void UpdateCameraVector();
 };
