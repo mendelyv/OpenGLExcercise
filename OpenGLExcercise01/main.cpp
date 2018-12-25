@@ -98,6 +98,32 @@ void processInput(GLFWwindow* window)
 	{
 		camera->forwardSpeed = 0.0f;
 	}
+
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		camera->rightSpeed = 1.0f;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		camera->rightSpeed = -1.0f;
+	}
+	else
+	{
+		camera->rightSpeed = 0.0f;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+	{
+		camera->upSpeed = 1.0f;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+	{
+		camera->upSpeed = -1.0f;
+	}
+	else
+	{
+		camera->upSpeed = 0.0f;
+	}
 }
 
 double lastX;
@@ -274,10 +300,10 @@ int main()
 			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "viewMat"), 1, GL_FALSE, glm::value_ptr(viewMat));
 			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projMat"), 1, GL_FALSE, glm::value_ptr(projMat));
 			glUniform3f(glGetUniformLocation(shader->ID, "objColor"), 1.0f, 0.5f, 0.31f);
-			glUniform3f(glGetUniformLocation(shader->ID, "ambientColor"), 1.0f, 1.0f, 1.0f);
-			glUniform3f(glGetUniformLocation(shader->ID, "ambientColor"), 1.0f, 1.0f, 1.0f);
+			glUniform3f(glGetUniformLocation(shader->ID, "ambientColor"), 0.2f, 0.1f, 0.0f);
 			glUniform3f(glGetUniformLocation(shader->ID, "lightPos"), 10.0f, 10.0f, 5.0f);
 			glUniform3f(glGetUniformLocation(shader->ID, "lightColor"), 1.0f, 1.0f, 1.0f);
+			glUniform3f(glGetUniformLocation(shader->ID, "cameraPos"), camera->position.x, camera->position.y, camera->position.z);
 
 			glBindVertexArray(VAO);
 			glDrawArrays(GL_TRIANGLES, 0, 36);

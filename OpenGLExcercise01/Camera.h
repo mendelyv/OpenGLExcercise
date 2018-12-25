@@ -20,6 +20,8 @@ public:
 	float yaw;
 
 	float forwardSpeed = 0.0f;
+	float rightSpeed = 0.0f;
+	float upSpeed = 0.0f;
 
 	glm::mat4 GetViewMatrix();
 	void ProcessMouseMovement(float deltaX, float deltaY);
