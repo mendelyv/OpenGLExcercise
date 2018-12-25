@@ -1,17 +1,17 @@
 #version 330 core
 out vec4 FragColor;
-in vec4 vertexColor;
-//uniform vec4 ourColor;//从CPU输入的值
-in vec2 texCoord;
+in vec3 FragPos;
+in vec3 Normal;
 
-uniform sampler2D tex;//外部输入一个纹理值
-uniform sampler2D tex2;
 uniform vec3 objColor;
 uniform vec3 ambientColor;
+uniform vec3 lightPos;
+uniform vec3 lightColor;
 
 void main()
 {
-//	FragColor = mix(texture(tex, texCoord), texture(tex2, texCoord), 0.2);
-	//这里的向量相乘是图学语言实现的，即为返回向量的对应元素相乘后的一个新的向量
-	FragColor = vec4(objColor * ambientColor, 1.0f) * mix(texture(tex, texCoord), texture(tex2, texCoord), 0.2);
+	vec3 lightDir = normalize(lightPos - FragPos);
+	//漫反射光即为光线跟反射点的法向量点乘
+	vec3 diffuse = dot(lightDir, Normal) * lightColor;
+	FragColor = vec4((diffuse + ambientColor) * objColor, 1.0f);
 }
