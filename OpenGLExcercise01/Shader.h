@@ -2,6 +2,10 @@
 #define __SHADER_H__
 #include <string>
 
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
+
 class Shader
 {
 public:
@@ -14,7 +18,8 @@ public:
 
 public:
 	void Use();
-
+	void SetUniform3f(const char* paramNameString, glm::vec3 param);
+	void SetUniform1f(const char* paramNameString, float param);
 
 private:
 	void CheckCompileErrors(unsigned int ID, std::string type);

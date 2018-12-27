@@ -3,6 +3,16 @@ out vec4 FragColor;
 in vec3 FragPos;
 in vec3 Normal;
 
+struct Material
+{
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+	float shininess;
+};
+
+uniform Material material;
+
 uniform vec3 objColor;
 uniform vec3 ambientColor;
 uniform vec3 lightPos;
@@ -15,10 +25,11 @@ void main()
 	vec3 reflectVec = reflect(-lightDir, Normal);
 	vec3 cameraVec = normalize(cameraPos - FragPos);
 
-	float specularAmount = pow(max(dot(reflectVec, cameraVec), 0), 32);
-	vec3 specular = specularAmount * lightColor;
+	float specularAmount = pow(max(dot(reflectVec, cameraVec), 0), material.shininess);
+	vec3 specular = material.specular * specularAmount * lightColor;
 
 	//漫反射光即为光线跟反射点的法向量点乘
-	vec3 diffuse = max(dot(lightDir, Normal), 0) * lightColor;
-	FragColor = vec4((diffuse + ambientColor + specular) * objColor, 1.0f);
+	vec3 diffuse = material.diffuse * max(dot(lightDir, Normal), 0) * lightColor;
+	vec3 ambient = material.ambient * ambientColor;
+	FragColor = vec4((diffuse + ambient + specular) * objColor, 1.0f);
 }

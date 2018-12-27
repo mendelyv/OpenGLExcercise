@@ -8,6 +8,7 @@
 #include "stb_image.h"
 
 #include "Shader.h"
+#include "Material.h"
 #include "Camera.h"
 
 #include <glm.hpp>
@@ -212,6 +213,7 @@ int main()
 	#pragma endregion
 
 	Shader* shader = new Shader("vertexSource.vert", "fragmentSource.frag");
+	Material* material = new Material(shader, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 64.0f);
 
 	#pragma region Init VAO,VBO
 	//顶点数组对象：Vertex Array Object
@@ -304,6 +306,11 @@ int main()
 			glUniform3f(glGetUniformLocation(shader->ID, "lightPos"), 10.0f, 10.0f, 5.0f);
 			glUniform3f(glGetUniformLocation(shader->ID, "lightColor"), 1.0f, 1.0f, 1.0f);
 			glUniform3f(glGetUniformLocation(shader->ID, "cameraPos"), camera->position.x, camera->position.y, camera->position.z);
+
+			material->shader->SetUniform3f("material.ambient", material->ambient);
+			material->shader->SetUniform3f("material.diffuse", material->diffuse);
+			material->shader->SetUniform3f("material.specular", material->specular);
+			material->shader->SetUniform1f("material.shininess", material->shininess);
 
 			glBindVertexArray(VAO);
 			glDrawArrays(GL_TRIANGLES, 0, 36);

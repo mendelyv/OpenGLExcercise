@@ -19,6 +19,9 @@
     <Filter Include="源文件\Camera">
       <UniqueIdentifier>{2506989a-383f-4e88-90eb-80396ff63adf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Material">
+      <UniqueIdentifier>{bda0473c-f9a1-452d-9224-3375fb9978c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,6 +33,9 @@
     <ClCompile Include="Camera.cpp">
       <Filter>源文件\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>源文件\Material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -40,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>源文件\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>源文件\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
