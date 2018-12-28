@@ -17,48 +17,93 @@
 
 #pragma region Model Data
 //顶点
+//float vertices[] = {
+//	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+//	 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+//	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+//	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+//	-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+//	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+//
+//	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+//	 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+//	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+//	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+//	-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+//	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+//
+//	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+//	-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+//	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+//	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+//	-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+//	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+//
+//	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+//	 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+//	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+//	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+//	 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+//	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+//
+//	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+//	 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+//	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+//	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+//	-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+//	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+//
+//	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+//	 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+//	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+//	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+//	-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+//	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+//};
+
 float vertices[] = {
-	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	// positions          // normals           // texture coords
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
 
-	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
 
-	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+	-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
 
-	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
 
-	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
 
-	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-	 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
+	 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  1.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
 };
 
 glm::vec3 cubePositions[] = {
@@ -153,6 +198,7 @@ void mouseEventCallBack(GLFWwindow* window, double x, double y)
 //加载纹理给GPU
 unsigned int LoadImageToGPU(const char* imageName, int textureSlot, bool hasAlpha = false)
 {
+	stbi_set_flip_vertically_on_load(true);//反转y轴
 	unsigned int ret;
 	int width, height, numChannel;
 	glGenTextures(1, &ret);
@@ -213,7 +259,7 @@ int main()
 	#pragma endregion
 
 	Shader* shader = new Shader("vertexSource.vert", "fragmentSource.frag");
-	Material* material = new Material(shader, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 64.0f);
+	Material* material = new Material(shader, LoadImageToGPU("container2.png", 0, true), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 64.0f);
 
 	#pragma region Init VAO,VBO
 	//顶点数组对象：Vertex Array Object
@@ -234,7 +280,7 @@ int main()
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_READ);
 
 	//位置属性
-	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(4);
 
 	//颜色属性
@@ -246,17 +292,22 @@ int main()
 	//glEnableVertexAttribArray(6);
 
 	//法向量属性
-	glVertexAttribPointer(7, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(7, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(7);
+
+	//uv属性
+	glVertexAttribPointer(8, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(8);
+
 	#pragma endregion
 
 	stbi_set_flip_vertically_on_load(true);//反转y轴
 
 	//纹理缓存
-	unsigned int texBufferA;
-	texBufferA = LoadImageToGPU("container.jpg", 0);
-	unsigned int texBufferB;
-	texBufferB = LoadImageToGPU("awesomeface.png", 3, true);
+	//unsigned int texBufferA;
+	//texBufferA = LoadImageToGPU("container.jpg", 0);
+	//unsigned int texBufferB;
+	//texBufferB = LoadImageToGPU("awesomeface.png", 3, true);
 
 	//计算位移坐标矩阵
 	//tip : 当要混合操作时，先进行缩放操作，然后是旋转，最后是位移，否则它们会（消极的）相互影响
@@ -286,7 +337,8 @@ int main()
 		processInput(window);
 
 		// rendering commands here
-		glClearColor(0, 0.5f, 0.5f, 1.0f);
+		//glClearColor(0, 0.5f, 0.5f, 1.0f);
+		glClearColor(0, 0, 0, 1.0f);
 		//清除颜色buffer和深度buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -294,21 +346,22 @@ int main()
 		for (int i = 0; i < 10; i++)
 		{
 			modelMat = glm::translate(glm::mat4(1.0f), cubePositions[i]);
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, texBufferA);
-			glActiveTexture(GL_TEXTURE3);
-			glBindTexture(GL_TEXTURE_2D, texBufferB);
+			//glActiveTexture(GL_TEXTURE0);
+			//glBindTexture(GL_TEXTURE_2D, texBufferA);
+			//glActiveTexture(GL_TEXTURE3);
+			//glBindTexture(GL_TEXTURE_2D, texBufferB);
 			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "modelMat"), 1, GL_FALSE, glm::value_ptr(modelMat));
 			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "viewMat"), 1, GL_FALSE, glm::value_ptr(viewMat));
 			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projMat"), 1, GL_FALSE, glm::value_ptr(projMat));
-			glUniform3f(glGetUniformLocation(shader->ID, "objColor"), 1.0f, 0.5f, 0.31f);
-			glUniform3f(glGetUniformLocation(shader->ID, "ambientColor"), 0.2f, 0.1f, 0.0f);
+			glUniform3f(glGetUniformLocation(shader->ID, "objColor"), 1.0f, 1.0f, 1.0f);
+			glUniform3f(glGetUniformLocation(shader->ID, "ambientColor"), 0.2f, 0.2f, 0.2f);
 			glUniform3f(glGetUniformLocation(shader->ID, "lightPos"), 10.0f, 10.0f, 5.0f);
 			glUniform3f(glGetUniformLocation(shader->ID, "lightColor"), 1.0f, 1.0f, 1.0f);
 			glUniform3f(glGetUniformLocation(shader->ID, "cameraPos"), camera->position.x, camera->position.y, camera->position.z);
 
 			material->shader->SetUniform3f("material.ambient", material->ambient);
-			material->shader->SetUniform3f("material.diffuse", material->diffuse);
+			//material->shader->SetUniform1f("material.diffuse", material->diffuse);
+			material->shader->SetUniform1i("material.diffuse", 0);
 			material->shader->SetUniform3f("material.specular", material->specular);
 			material->shader->SetUniform1f("material.shininess", material->shininess);
 

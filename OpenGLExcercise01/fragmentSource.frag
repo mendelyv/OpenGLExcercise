@@ -2,11 +2,12 @@
 out vec4 FragColor;
 in vec3 FragPos;
 in vec3 Normal;
+in vec2 texCoord;
 
 struct Material
 {
 	vec3 ambient;
-	vec3 diffuse;
+	sampler2D diffuse;
 	vec3 specular;
 	float shininess;
 };
@@ -29,7 +30,8 @@ void main()
 	vec3 specular = material.specular * specularAmount * lightColor;
 
 	//漫反射光即为光线跟反射点的法向量点乘
-	vec3 diffuse = material.diffuse * max(dot(lightDir, Normal), 0) * lightColor;
-	vec3 ambient = material.ambient * ambientColor;
+	vec3 diffuse = texture(material.diffuse, texCoord).rgb * max(dot(lightDir, Normal), 0) * lightColor;
+//	vec3 diffuse = texture(material.diffuse, texCoord).rgb;
+	vec3 ambient = ambientColor * texture(material.diffuse, texCoord).rgb;
 	FragColor = vec4((diffuse + ambient + specular) * objColor, 1.0f);
 }
