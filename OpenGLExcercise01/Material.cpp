@@ -6,7 +6,7 @@ Material::Material()
 
 }
 
-Material::Material(Shader* shader, unsigned int diffuse, glm::vec3 specular, glm::vec3 ambient, float shininess)
+Material::Material(Shader* shader, unsigned int diffuse, unsigned int specular, glm::vec3 ambient, float shininess)
 {
 	this->shader = shader;
 	this->diffuse = diffuse;

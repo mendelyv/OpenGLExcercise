@@ -8,7 +8,7 @@ struct Material
 {
 	vec3 ambient;
 	sampler2D diffuse;
-	vec3 specular;
+	sampler2D specular;
 	float shininess;
 };
 
@@ -27,7 +27,7 @@ void main()
 	vec3 cameraVec = normalize(cameraPos - FragPos);
 
 	float specularAmount = pow(max(dot(reflectVec, cameraVec), 0), material.shininess);
-	vec3 specular = material.specular * specularAmount * lightColor;
+	vec3 specular = texture(material.specular, texCoord).rgb * specularAmount * lightColor;
 
 	//漫反射光即为光线跟反射点的法向量点乘
 	vec3 diffuse = texture(material.diffuse, texCoord).rgb * max(dot(lightDir, Normal), 0) * lightColor;
