@@ -9,6 +9,7 @@ struct Material
 	vec3 ambient;
 	sampler2D diffuse;
 	sampler2D specular;
+	sampler2D emission;
 	float shininess;
 };
 
@@ -29,9 +30,11 @@ void main()
 	float specularAmount = pow(max(dot(reflectVec, cameraVec), 0), material.shininess);
 	vec3 specular = texture(material.specular, texCoord).rgb * specularAmount * lightColor;
 
+	vec3 emission = texture(material.emission, texCoord).rgb;
+
 	//漫反射光即为光线跟反射点的法向量点乘
 	vec3 diffuse = texture(material.diffuse, texCoord).rgb * max(dot(lightDir, Normal), 0) * lightColor;
 //	vec3 diffuse = texture(material.diffuse, texCoord).rgb;
 	vec3 ambient = ambientColor * texture(material.diffuse, texCoord).rgb;
-	FragColor = vec4((diffuse + ambient + specular) * objColor, 1.0f);
+	FragColor = vec4((diffuse + ambient + specular + emission) * objColor, 1.0f);
 }

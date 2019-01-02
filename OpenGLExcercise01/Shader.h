@@ -19,7 +19,8 @@ public:
 	enum Slot
 	{
 		DIFFUSE,
-		SPECULAR
+		SPECULAR,
+		EMISSION
 	};
 
 public:

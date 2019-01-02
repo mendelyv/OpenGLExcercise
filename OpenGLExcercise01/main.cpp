@@ -259,7 +259,13 @@ int main()
 	#pragma endregion
 
 	Shader* shader = new Shader("vertexSource.vert", "fragmentSource.frag");
-	Material* material = new Material(shader, LoadImageToGPU("container2.png", Shader::DIFFUSE, true), LoadImageToGPU("container2_specular.png", Shader::SPECULAR, true), glm::vec3(1.0f, 1.0f, 1.0f), 64.0f);
+	Material* material = new Material(
+		shader,
+		LoadImageToGPU("container2.png", Shader::DIFFUSE, true),
+		LoadImageToGPU("container2_specular.png", Shader::SPECULAR, true),
+		LoadImageToGPU("matrix.jpg", Shader::EMISSION),
+		glm::vec3(1.0f, 1.0f, 1.0f), 
+		64.0f);
 
 	#pragma region Init VAO,VBO
 	//顶点数组对象：Vertex Array Object
@@ -363,6 +369,7 @@ int main()
 			//material->shader->SetUniform1f("material.diffuse", material->diffuse);
 			material->shader->SetUniform1i("material.diffuse", Shader::DIFFUSE);
 			material->shader->SetUniform1i("material.specular", Shader::SPECULAR);
+			material->shader->SetUniform1i("material.emission", Shader::EMISSION);
 			//material->shader->SetUniform3f("material.specular", material->specular);
 			material->shader->SetUniform1f("material.shininess", material->shininess);
 

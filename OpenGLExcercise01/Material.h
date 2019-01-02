@@ -14,13 +14,14 @@ class Material
 {
 public:
 	Material();
-	Material(Shader* shader, unsigned int diffuse, unsigned int specular, glm::vec3 ambient, float shininess);
+	Material(Shader* shader, unsigned int diffuse, unsigned int specular, unsigned int emission, glm::vec3 ambient, float shininess);
 	~Material();
 
 	Shader* shader;
 	unsigned int diffuse;
 	glm::vec3 ambient;
 	unsigned int specular;
+	unsigned int emission;
 	float shininess;
 };
 
