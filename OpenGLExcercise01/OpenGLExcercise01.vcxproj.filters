@@ -28,6 +28,9 @@
     <Filter Include="源文件\LightPoint">
       <UniqueIdentifier>{18d67a51-e05d-4b5f-a16a-f13daf4c72bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\LightSpot">
+      <UniqueIdentifier>{54ec28dd-5499-41d3-bff3-63fb79dc2699}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,6 +51,9 @@
     <ClCompile Include="LightPoint.cpp">
       <Filter>源文件\LightPoint</Filter>
     </ClCompile>
+    <ClCompile Include="LightSpot.cpp">
+      <Filter>源文件\LightSpot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -67,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="LightPoint.h">
       <Filter>源文件\LightPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="LightSpot.h">
+      <Filter>源文件\LightSpot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
