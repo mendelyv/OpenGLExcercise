@@ -10,6 +10,7 @@
 #include "Shader.h"
 #include "Material.h"
 #include "Camera.h"
+#include "LightDirectional.h"
 
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
@@ -122,6 +123,8 @@ glm::vec3 cubePositions[] = {
 
 //Instantiate Camera Object
 Camera* camera = new Camera(glm::vec3(0, 0, 3.0f), glm::radians(15.0f), glm::radians(180.0f), glm::vec3(0, 1.0f, 0));
+
+LightDirectional* light = new LightDirectional(glm::vec3(10.0f, 10.0f, -5.0f), glm::vec3(glm::radians(45.0f), 0, 0));
 
 #pragma region Input Declare
 //检测输入信号
@@ -355,8 +358,9 @@ int main()
 			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projMat"), 1, GL_FALSE, glm::value_ptr(projMat));
 			glUniform3f(glGetUniformLocation(shader->ID, "objColor"), 1.0f, 1.0f, 1.0f);
 			glUniform3f(glGetUniformLocation(shader->ID, "ambientColor"), 0.2f, 0.2f, 0.2f);
-			glUniform3f(glGetUniformLocation(shader->ID, "lightPos"), 10.0f, 10.0f, 5.0f);
-			glUniform3f(glGetUniformLocation(shader->ID, "lightColor"), 1.0f, 1.0f, 1.0f);
+			//glUniform3f(glGetUniformLocation(shader->ID, "lightPos"), light->position.x, light->position.y, light->position.z);
+			glUniform3f(glGetUniformLocation(shader->ID, "lightColor"), light->color.x, light->color.y, light->color.z);
+			glUniform3f(glGetUniformLocation(shader->ID, "lightDir"), light->direction.x, light->direction.y, light->direction.z);
 			glUniform3f(glGetUniformLocation(shader->ID, "cameraPos"), camera->position.x, camera->position.y, camera->position.z);
 
 			material->shader->SetUniform3f("material.ambient", material->ambient);

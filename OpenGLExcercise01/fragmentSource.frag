@@ -19,10 +19,11 @@ uniform vec3 ambientColor;
 uniform vec3 lightPos;
 uniform vec3 lightColor;
 uniform vec3 cameraPos;
+uniform vec3 lightDir;
 
 void main()
 {
-	vec3 lightDir = normalize(lightPos - FragPos);
+//	vec3 lightDir = normalize(lightPos - FragPos);
 	vec3 reflectVec = reflect(-lightDir, Normal);
 	vec3 cameraVec = normalize(cameraPos - FragPos);
 
