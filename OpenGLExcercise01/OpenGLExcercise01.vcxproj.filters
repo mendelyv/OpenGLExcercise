@@ -22,6 +22,12 @@
     <Filter Include="源文件\Material">
       <UniqueIdentifier>{bda0473c-f9a1-452d-9224-3375fb9978c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\LightDirectional">
+      <UniqueIdentifier>{d503dcac-8b54-451b-b5d7-1540a4f03481}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\LightPoint">
+      <UniqueIdentifier>{18d67a51-e05d-4b5f-a16a-f13daf4c72bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,6 +42,12 @@
     <ClCompile Include="Material.cpp">
       <Filter>源文件\Material</Filter>
     </ClCompile>
+    <ClCompile Include="LightDirectional.cpp">
+      <Filter>源文件\LightDirectional</Filter>
+    </ClCompile>
+    <ClCompile Include="LightPoint.cpp">
+      <Filter>源文件\LightPoint</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -49,6 +61,12 @@
     </ClInclude>
     <ClInclude Include="Material.h">
       <Filter>源文件\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="LightDirectional.h">
+      <Filter>源文件\LightDirectional</Filter>
+    </ClInclude>
+    <ClInclude Include="LightPoint.h">
+      <Filter>源文件\LightPoint</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

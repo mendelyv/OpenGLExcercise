@@ -12,18 +12,29 @@ struct Material
 	float shininess;
 };
 
+struct LightPoint
+{
+	float constant;
+	float linear;
+	float quadratic;
+};
+
 uniform Material material;
+uniform LightPoint lightPoint;
 
 uniform vec3 objColor;
 uniform vec3 ambientColor;
 uniform vec3 lightPos;
 uniform vec3 lightColor;
 uniform vec3 cameraPos;
-uniform vec3 lightDir;
+uniform vec3 lightDirUniform;
 
 void main()
 {
-//	vec3 lightDir = normalize(lightPos - FragPos);
+	float dis = length(lightPos - FragPos);
+	float attenuation = 1.0 / (lightPoint.constant + lightPoint.linear * dis + lightPoint.quadratic * (dis * dis));
+
+	vec3 lightDir = normalize(lightPos - FragPos);
 	vec3 reflectVec = reflect(-lightDir, Normal);
 	vec3 cameraVec = normalize(cameraPos - FragPos);
 
@@ -34,5 +45,5 @@ void main()
 	vec3 diffuse = texture(material.diffuse, texCoord).rgb * max(dot(lightDir, Normal), 0) * lightColor;
 //	vec3 diffuse = texture(material.diffuse, texCoord).rgb;
 	vec3 ambient = ambientColor * texture(material.diffuse, texCoord).rgb;
-	FragColor = vec4((diffuse + ambient + specular) * objColor, 1.0f);
+	FragColor = vec4((ambient + (specular + diffuse) * attenuation) * objColor, 1.0f);
 }

@@ -7,7 +7,7 @@ LightDirectional::LightDirectional()
 	direction = glm::vec3(0, 0, 1.0f);
 }
 
-LightDirectional::LightDirectional(glm::vec3 position, glm::vec3 angles, glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f))
+LightDirectional::LightDirectional(glm::vec3 position, glm::vec3 angles, glm::vec3 color)
 {
 	direction = glm::vec3(0, 0, 1.0f);
 	this->position = position;
