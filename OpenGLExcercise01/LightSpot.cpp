@@ -14,6 +14,9 @@ LightSpot::LightSpot(glm::vec3 position, glm::vec3 angles, glm::vec3 color)
 	//this->direction = glm::vec3(0, 0, 1.0f);
 	cosPhyInner = 0.9f;
 	cosPhyOutter = 0.85;
+	constant = 1.0f;
+	linear = 0.09f;
+	quadratic = 0.032f;
 	UpdateDirection();
 }
 

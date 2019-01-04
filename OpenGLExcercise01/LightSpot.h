@@ -17,6 +17,11 @@ public:
 	float cosPhyInner;
 	float cosPhyOutter;
 
+	//光衰减的公式参数
+	float constant;
+	float linear;
+	float quadratic;
+
 public:
 	LightSpot();
 	LightSpot(glm::vec3 position, glm::vec3 angles, glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f));
