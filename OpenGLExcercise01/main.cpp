@@ -127,7 +127,29 @@ glm::vec3 cubePositions[] = {
 Camera* camera = new Camera(glm::vec3(0, 0, 3.0f), glm::radians(15.0f), glm::radians(180.0f), glm::vec3(0, 1.0f, 0));
 
 //Instantiate Light Object
-LightSpot* light = new LightSpot(glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(glm::radians(90.0f), 0, 0));
+LightDirectional* lightD = new LightDirectional(
+	glm::vec3(1.0f, 1.0f, -1.0f), 
+	glm::vec3(glm::radians(45.0f), glm::radians(45.0f), 0)
+);
+
+LightPoint* lightP0 = new LightPoint(glm::vec3(1.0f, 0.0f, 0.0f),
+	glm::vec3(glm::radians(45.0f), glm::radians(45.0f), 0),
+	glm::vec3(1.0f, 0.0f, 0.0f)
+);
+LightPoint* lightP1 = new LightPoint(glm::vec3(0.0f, 1.0f, 0.0f),
+	glm::vec3(glm::radians(45.0f), glm::radians(45.0f), 0),
+	glm::vec3(0.0f, 1.0f, 0.0f)
+);
+LightPoint* lightP2 = new LightPoint(glm::vec3(0.0f, 0.0f, 1.0f),
+	glm::vec3(glm::radians(45.0f), glm::radians(45.0f), 0),
+	glm::vec3(0.0f, 0.0f, 1.0f)
+);
+LightPoint* lightP3 = new LightPoint(glm::vec3(1.0f, 1.0f, 1.0f),
+	glm::vec3(glm::radians(45.0f), glm::radians(45.0f), 0),
+	glm::vec3(1.0f, 1.0f, 1.0f)
+);
+
+//LightSpot* light = new LightSpot(glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(glm::radians(90.0f), 0, 0));
 
 #pragma region Input Declare
 //检测输入信号
@@ -361,11 +383,42 @@ int main()
 			glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projMat"), 1, GL_FALSE, glm::value_ptr(projMat));
 			glUniform3f(glGetUniformLocation(shader->ID, "objColor"), 1.0f, 1.0f, 1.0f);
 			glUniform3f(glGetUniformLocation(shader->ID, "ambientColor"), 0.1f, 0.1f, 0.1f);
-			glUniform3f(glGetUniformLocation(shader->ID, "lightPos"), light->position.x, light->position.y, light->position.z);
-			glUniform3f(glGetUniformLocation(shader->ID, "lightColor"), light->color.x, light->color.y, light->color.z);
-			glUniform3f(glGetUniformLocation(shader->ID, "lightDirUniform"), light->direction.x, light->direction.y, light->direction.z);
-			glUniform1f(glGetUniformLocation(shader->ID, "lightSpot.cosPhyInner"), light->cosPhyInner);
-			glUniform1f(glGetUniformLocation(shader->ID, "lightSpot.cosPhyOutter"), light->cosPhyOutter);
+			
+			glUniform3f(glGetUniformLocation(shader->ID, "lightD.pos"), lightD->position.x, lightD->position.y, lightD->position.z);
+			glUniform3f(glGetUniformLocation(shader->ID, "lightD.color"), lightD->color.x, lightD->color.y, lightD->color.z);
+			glUniform3f(glGetUniformLocation(shader->ID, "lightD.dirToLight"), lightD->direction.x, lightD->direction.y, lightD->direction.z);
+			
+			glUniform3f(glGetUniformLocation(shader->ID, "lightP0.pos"), lightP0->position.x, lightP0->position.y, lightP0->position.z);
+			glUniform3f(glGetUniformLocation(shader->ID, "lightP0.color"), lightP0->color.x, lightP0->color.y, lightP0->color.z);
+			glUniform3f(glGetUniformLocation(shader->ID, "lightP0.dirToLight"), lightP0->direction.x, lightP0->direction.y, lightP0->direction.z);
+			glUniform1f(glGetUniformLocation(shader->ID, "lightP0.constant"), lightP0->constant);
+			glUniform1f(glGetUniformLocation(shader->ID, "lightP0.linear"), lightP0->linear);
+			glUniform1f(glGetUniformLocation(shader->ID, "lightP0.quadratic"), lightP0->quadratic);
+
+			glUniform3f(glGetUniformLocation(shader->ID, "lightP1.pos"), lightP1->position.x, lightP1->position.y, lightP1->position.z);
+			glUniform3f(glGetUniformLocation(shader->ID, "lightP1.color"), lightP1->color.x, lightP1->color.y, lightP1->color.z);
+			glUniform3f(glGetUniformLocation(shader->ID, "lightP1.dirToLight"), lightP1->direction.x, lightP1->direction.y, lightP1->direction.z);
+			glUniform1f(glGetUniformLocation(shader->ID, "lightP1.constant"), lightP1->constant);
+			glUniform1f(glGetUniformLocation(shader->ID, "lightP1.linear"), lightP1->linear);
+			glUniform1f(glGetUniformLocation(shader->ID, "lightP1.quadratic"), lightP1->quadratic);
+
+			glUniform3f(glGetUniformLocation(shader->ID, "lightP2.pos"), lightP2->position.x, lightP2->position.y, lightP2->position.z);
+			glUniform3f(glGetUniformLocation(shader->ID, "lightP2.color"), lightP2->color.x, lightP2->color.y, lightP2->color.z);
+			glUniform3f(glGetUniformLocation(shader->ID, "lightP2.dirToLight"), lightP2->direction.x, lightP2->direction.y, lightP2->direction.z);
+			glUniform1f(glGetUniformLocation(shader->ID, "lightP2.constant"), lightP2->constant);
+			glUniform1f(glGetUniformLocation(shader->ID, "lightP2.linear"), lightP2->linear);
+			glUniform1f(glGetUniformLocation(shader->ID, "lightP2.quadratic"), lightP2->quadratic);
+
+			glUniform3f(glGetUniformLocation(shader->ID, "lightP3.pos"), lightP3->position.x, lightP3->position.y, lightP3->position.z);
+			glUniform3f(glGetUniformLocation(shader->ID, "lightP3.color"), lightP3->color.x, lightP3->color.y, lightP3->color.z);
+			glUniform3f(glGetUniformLocation(shader->ID, "lightP3.dirToLight"), lightP3->direction.x, lightP3->direction.y, lightP3->direction.z);
+			glUniform1f(glGetUniformLocation(shader->ID, "lightP3.constant"), lightP3->constant);
+			glUniform1f(glGetUniformLocation(shader->ID, "lightP3.linear"), lightP3->linear);
+			glUniform1f(glGetUniformLocation(shader->ID, "lightP3.quadratic"), lightP3->quadratic);
+
+
+			//glUniform1f(glGetUniformLocation(shader->ID, "lightSpot.cosPhyInner"), light->cosPhyInner);
+			//glUniform1f(glGetUniformLocation(shader->ID, "lightSpot.cosPhyOutter"), light->cosPhyOutter);
 			glUniform3f(glGetUniformLocation(shader->ID, "cameraPos"), camera->position.x, camera->position.y, camera->position.z);
 			//glUniform1f(glGetUniformLocation(shader->ID, "lightPoint.constant"), light->constant);
 			//glUniform1f(glGetUniformLocation(shader->ID, "lightPoint.linear"), light->linear);
