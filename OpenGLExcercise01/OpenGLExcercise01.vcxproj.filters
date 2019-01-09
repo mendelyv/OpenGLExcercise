@@ -31,6 +31,9 @@
     <Filter Include="源文件\LightSpot">
       <UniqueIdentifier>{54ec28dd-5499-41d3-bff3-63fb79dc2699}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Mesh">
+      <UniqueIdentifier>{49a1e940-1879-4352-b257-23f4dd669e57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -54,6 +57,9 @@
     <ClCompile Include="LightSpot.cpp">
       <Filter>源文件\LightSpot</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>源文件\Mesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -76,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="LightSpot.h">
       <Filter>源文件\LightSpot</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>源文件\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
