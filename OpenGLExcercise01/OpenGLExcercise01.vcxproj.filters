@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="fragmentSource.frag" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="vertexSource.vert" />
