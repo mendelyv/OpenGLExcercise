@@ -32,6 +32,7 @@ public :
 	std::vector<Texture> textures;
 
 public :
+	Mesh(float vectices[]);
 	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
 	~Mesh();
 

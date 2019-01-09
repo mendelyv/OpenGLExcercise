@@ -13,6 +13,7 @@
 #include "LightDirectional.h"
 #include "LightPoint.h"
 #include "LightSpot.h"
+#include "Mesh.h"
 
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
@@ -254,6 +255,8 @@ unsigned int LoadImageToGPU(const char* imageName, int textureSlot, bool hasAlph
 	return ret;
 }
 
+
+
 int main()
 {
 	#pragma region Open a Window
@@ -295,42 +298,43 @@ int main()
 	Material* material = new Material(shader, LoadImageToGPU("container2.png", Shader::DIFFUSE, true), LoadImageToGPU("container2_specular.png", Shader::SPECULAR, true), glm::vec3(1.0f, 1.0f, 1.0f), 64.0f);
 
 	#pragma region Init VAO,VBO
-	//顶点数组对象：Vertex Array Object
-	unsigned int VAO;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
+	Mesh *cube = new Mesh(vertices);
+	////顶点数组对象：Vertex Array Object
+	//unsigned int VAO;
+	//glGenVertexArrays(1, &VAO);
+	//glBindVertexArray(VAO);
 
-	//顶点缓冲对象：Vertex Buffer Object
-	unsigned int VBO;
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	////顶点缓冲对象：Vertex Buffer Object
+	//unsigned int VBO;
+	//glGenBuffers(1, &VBO);
+	//glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	//索引缓冲对象：Element Buffer Object
-	//unsigned int EBO;
-	//glGenBuffers(1, &EBO);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_READ);
+	////索引缓冲对象：Element Buffer Object
+	////unsigned int EBO;
+	////glGenBuffers(1, &EBO);
+	////glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	////glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_READ);
 
-	//位置属性
-	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(4);
+	////位置属性
+	//glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	//glEnableVertexAttribArray(4);
 
-	//颜色属性
-	//glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	//glEnableVertexAttribArray(5);
+	////颜色属性
+	////glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	////glEnableVertexAttribArray(5);
 
-	//文理uv属性
-	//glVertexAttribPointer(6, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	//glEnableVertexAttribArray(6);
+	////文理uv属性
+	////glVertexAttribPointer(6, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	////glEnableVertexAttribArray(6);
 
-	//法向量属性
-	glVertexAttribPointer(7, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(7);
+	////法向量属性
+	//glVertexAttribPointer(7, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	//glEnableVertexAttribArray(7);
 
-	//uv属性
-	glVertexAttribPointer(8, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(8);
+	////uv属性
+	//glVertexAttribPointer(8, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	//glEnableVertexAttribArray(8);
 
 	#pragma endregion
 
@@ -376,7 +380,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		viewMat = camera->GetViewMatrix();
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			modelMat = glm::translate(glm::mat4(1.0f), cubePositions[i]);
 			//glActiveTexture(GL_TEXTURE0);
@@ -441,8 +445,9 @@ int main()
 			//material->shader->SetUniform3f("material.specular", material->specular);
 			material->shader->SetUniform1f("material.shininess", material->shininess);
 
-			glBindVertexArray(VAO);
-			glDrawArrays(GL_TRIANGLES, 0, 36);
+			cube->Draw(material->shader);
+			//glBindVertexArray(VAO);
+			//glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
