@@ -1,18 +1,21 @@
 #version 330 core
-layout(location = 4) in vec3 aPos;//这里的管线要跟下方使用的管线编号相同
-layout(location = 5) in vec3 aColor;
-layout(location = 6) in vec2 aTexCoord;//uv值
+layout(location = 0) in vec3 aPos;//这里的管线要跟下方使用的管线编号相同
+layout(location = 1) in vec3 aNormal;//法向量
+layout(location = 2) in vec2 aTexCoord;
 
 //uniform mat4 transform;
 uniform mat4 modelMat;
 uniform mat4 viewMat;
 uniform mat4 projMat;
 
-out vec4 vertexColor;//向片段着色器输出一个颜色
+out vec3 FragPos;
+out vec3 Normal;
 out vec2 texCoord;
+
 void main()
 {
-	gl_Position = projMat * viewMat * modelMat * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
-	vertexColor = vec4(aColor.x, aColor.y, aColor.z, 1.0);
+	gl_Position = projMat * viewMat * modelMat * vec4(aPos.xyz, 1.0f);
+	FragPos = (modelMat * vec4(aPos.xyz, 1.0f)).xyz;
 	texCoord = aTexCoord;
+	Normal = mat3(transpose(inverse(modelMat))) * aNormal;
 }

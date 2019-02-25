@@ -68,6 +68,21 @@ void Shader::Use()
 	glUseProgram(ID);
 }
 
+void Shader::SetUniform3f(const char * paramNameString, glm::vec3 param)
+{
+	glUniform3f(glGetUniformLocation(ID, paramNameString), param.x, param.y, param.z);
+}
+
+void Shader::SetUniform1f(const char * paramNameString, float param)
+{
+	glUniform1f(glGetUniformLocation(ID, paramNameString), param);
+}
+
+void Shader::SetUniform1i(const char * paramNameString, int param)
+{
+	glUniform1i(glGetUniformLocation(ID, paramNameString), param);
+}
+
 
 void Shader::CheckCompileErrors(unsigned int ID, std::string type)
 {

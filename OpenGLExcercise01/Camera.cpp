@@ -6,7 +6,7 @@ Camera::Camera(glm::vec3 position, glm::vec3 target, glm::vec3 worldUp)
 	this->worldUp = worldUp;
 	forward = glm::normalize(target - position);
 	right = glm::normalize(glm::cross(forward, worldUp));
-	up = glm::normalize(glm::cross(forward, right));
+	up = glm::normalize(glm::cross(right, forward));
 }
 
 Camera::Camera(glm::vec3 position, float pitch, float yaw, glm::vec3 worldUp)
@@ -19,7 +19,7 @@ Camera::Camera(glm::vec3 position, float pitch, float yaw, glm::vec3 worldUp)
 	forward.y = glm::sin(pitch);
 	forward.z = glm::cos(pitch) * glm::cos(yaw);
 	right = glm::normalize(glm::cross(forward, worldUp));
-	up = glm::normalize(glm::cross(forward, right));
+	up = glm::normalize(glm::cross(right, forward));
 }
 
 Camera::~Camera()
@@ -43,7 +43,7 @@ void Camera::ProcessMouseMovement(float deltaX, float deltaY)
 
 void Camera::UpdateCameraPosition()
 {
-	position += forward * forwardSpeed * 0.01f;
+	position += forward * forwardSpeed * 0.01f + right * rightSpeed * 0.01f + up * upSpeed * 0.01f;
 }
 
 void Camera::UpdateCameraVector()

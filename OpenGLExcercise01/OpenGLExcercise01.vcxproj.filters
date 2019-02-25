@@ -19,6 +19,21 @@
     <Filter Include="源文件\Camera">
       <UniqueIdentifier>{2506989a-383f-4e88-90eb-80396ff63adf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Material">
+      <UniqueIdentifier>{bda0473c-f9a1-452d-9224-3375fb9978c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\LightDirectional">
+      <UniqueIdentifier>{d503dcac-8b54-451b-b5d7-1540a4f03481}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\LightPoint">
+      <UniqueIdentifier>{18d67a51-e05d-4b5f-a16a-f13daf4c72bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\LightSpot">
+      <UniqueIdentifier>{54ec28dd-5499-41d3-bff3-63fb79dc2699}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Mesh">
+      <UniqueIdentifier>{49a1e940-1879-4352-b257-23f4dd669e57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -29,6 +44,21 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>源文件\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>源文件\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="LightDirectional.cpp">
+      <Filter>源文件\LightDirectional</Filter>
+    </ClCompile>
+    <ClCompile Include="LightPoint.cpp">
+      <Filter>源文件\LightPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="LightSpot.cpp">
+      <Filter>源文件\LightSpot</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>源文件\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +71,21 @@
     <ClInclude Include="Camera.h">
       <Filter>源文件\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>源文件\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="LightDirectional.h">
+      <Filter>源文件\LightDirectional</Filter>
+    </ClInclude>
+    <ClInclude Include="LightPoint.h">
+      <Filter>源文件\LightPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="LightSpot.h">
+      <Filter>源文件\LightSpot</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>源文件\Mesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg">
@@ -49,9 +94,16 @@
     <Image Include="awesomeface.png">
       <Filter>资源文件</Filter>
     </Image>
+    <Image Include="container2.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="container2_specular.png">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="fragmentSource.frag" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="vertexSource.vert" />
