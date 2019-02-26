@@ -14,6 +14,7 @@
 #include "LightPoint.h"
 #include "LightSpot.h"
 #include "Mesh.h"
+#include "Model.h"
 
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
@@ -257,9 +258,15 @@ unsigned int LoadImageToGPU(const char* imageName, int textureSlot, bool hasAlph
 
 
 
-int main()
+int main(int argc, char* argv[])
 {
-	#pragma region Open a Window
+	//std::cout << argv[0] << std::endl;
+	std::string exePath = argv[0];
+	//std::cout << exePath.substr(0, exePath.find_last_of('\\')) << std::endl;
+	std::string modelPath = exePath.substr(0, exePath.find_last_of('\\')) + "\\model\\nanosuit.obj";
+	std::cout << modelPath << std::endl;
+
+#pragma region Open a Window
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);//告诉GLFW要用的主版本号
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);//子版版本号
@@ -274,7 +281,7 @@ int main()
 	}
 	glfwMakeContextCurrent(window);
 	//隐藏鼠标
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, mouseEventCallBack);
 
 	//Init GLEW
@@ -298,7 +305,8 @@ int main()
 	Material* material = new Material(shader, LoadImageToGPU("container2.png", Shader::DIFFUSE, true), LoadImageToGPU("container2_specular.png", Shader::SPECULAR, true), glm::vec3(1.0f, 1.0f, 1.0f), 64.0f);
 
 	#pragma region Init VAO,VBO
-	Mesh *cube = new Mesh(vertices);
+	Mesh* cube = new Mesh(vertices);
+	Model* model = new Model(modelPath);
 	////顶点数组对象：Vertex Array Object
 	//unsigned int VAO;
 	//glGenVertexArrays(1, &VAO);
