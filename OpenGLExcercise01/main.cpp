@@ -264,7 +264,7 @@ int main(int argc, char* argv[])
 	std::string exePath = argv[0];
 	//std::cout << exePath.substr(0, exePath.find_last_of('\\')) << std::endl;
 	std::string modelPath = exePath.substr(0, exePath.find_last_of('\\')) + "\\model\\nanosuit.obj";
-	std::cout << modelPath << std::endl;
+	//std::cout << modelPath << std::endl;
 
 #pragma region Open a Window
 	glfwInit();
@@ -305,7 +305,7 @@ int main(int argc, char* argv[])
 	Material* material = new Material(shader, LoadImageToGPU("container2.png", Shader::DIFFUSE, true), LoadImageToGPU("container2_specular.png", Shader::SPECULAR, true), glm::vec3(1.0f, 1.0f, 1.0f), 64.0f);
 
 	#pragma region Init VAO,VBO
-	Mesh* cube = new Mesh(vertices);
+	//Mesh* cube = new Mesh(vertices);
 	Model* model = new Model(modelPath);
 	////顶点数组对象：Vertex Array Object
 	//unsigned int VAO;
@@ -453,7 +453,8 @@ int main(int argc, char* argv[])
 			//material->shader->SetUniform3f("material.specular", material->specular);
 			material->shader->SetUniform1f("material.shininess", material->shininess);
 
-			cube->Draw(material->shader);
+			//cube->Draw(material->shader);
+			model->Draw(material->shader);
 			//glBindVertexArray(VAO);
 			//glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
